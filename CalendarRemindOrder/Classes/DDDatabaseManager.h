@@ -21,3 +21,4 @@
 - (void)saveContext;
 
 @end
+extern DDDatabaseManager *_ddDataManagerinstance;
