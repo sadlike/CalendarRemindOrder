@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-#define DatabaseManager [DDDatabaseManager shared]
+//#define DatabaseManager [DDDatabaseManager shared]
 @interface DDDatabaseManager : NSObject
 
 + (instancetype)shared;

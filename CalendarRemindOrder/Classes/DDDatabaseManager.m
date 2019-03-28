@@ -12,26 +12,26 @@
 //DD_Shared(DDDatabaseManager)
 
 #pragma mark - Core Data stack
-
+DDDatabaseManager *_ddDataManagerinstance=nil;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-static DDDatabaseManager *_instance;
+//static DDDatabaseManager *_ddDataManagerinstance;
 
 + (instancetype)allocWithZone:(struct _NSZone *)zone{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _instance = [super allocWithZone:zone];
+        _ddDataManagerinstance = [super allocWithZone:zone];
     });
-    return _instance;
+    return _ddDataManagerinstance;
 }
 + (instancetype)shared{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _instance = [[DDDatabaseManager alloc]init];
+        _ddDataManagerinstance = [[DDDatabaseManager alloc]init];
     });
-    return _instance;
+    return _ddDataManagerinstance;
 }
 - (NSURL *)applicationDocumentsDirectory {
     // The directory the application uses to store the Core Data store file. This code uses a directory named "BG.ComicReader" in the application's documents directory.
@@ -43,8 +43,21 @@ static DDDatabaseManager *_instance;
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DianDianDB" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    //    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"DianDianDB" withExtension:@"momd"];
+    
+    //    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    
+    NSBundle *mainBundle = [NSBundle bundleForClass:@"CalendarRemindOrder"];
+    
+    // Check to see if the resource bundle exists inside the top level bundle
+    NSBundle *resourcesBundle = [NSBundle bundleWithPath:[mainBundle pathForResource:@"CalendarRemindOrder" ofType:@"bundle"]];
+    
+    if (resourcesBundle == nil) {
+        resourcesBundle = mainBundle;
+    }
+    NSURL *modelURL = [resourcesBundle URLForResource:@"DianDianDB" withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc]initWithContentsOfURL:modelURL];
+    
     return _managedObjectModel;
 }
 
@@ -112,3 +125,4 @@ static DDDatabaseManager *_instance;
 }
 
 @end
+
