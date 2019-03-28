@@ -31,7 +31,7 @@ static DDDatabaseManager *_instance;
     dispatch_once(&onceToken, ^{
         _instance = [[DDDatabaseManager alloc]init];
     });
-    return _instance
+    return _instance;
 }
 - (NSURL *)applicationDocumentsDirectory {
     // The directory the application uses to store the Core Data store file. This code uses a directory named "BG.ComicReader" in the application's documents directory.
