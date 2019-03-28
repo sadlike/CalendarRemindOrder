@@ -33,7 +33,7 @@ TODO: Add long description of the pod here.
   s.source_files = 'CalendarRemindOrder/Classes/**/*'
   
   s.resource_bundles = {
-     'CalendarRemindOrder' => ['CalendarRemindOrder/Assets/**/*']
+     'CalendarRemindOrder' => ['CalendarRemindOrder/Assets/*.*']
    }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
