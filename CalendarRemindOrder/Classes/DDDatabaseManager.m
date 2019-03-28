@@ -9,7 +9,7 @@
 #import "DDDatabaseManager.h"
 
 @implementation DDDatabaseManager
-DD_Shared(DDDatabaseManager)
+//DD_Shared(DDDatabaseManager)
 
 #pragma mark - Core Data stack
 
@@ -17,6 +17,22 @@ DD_Shared(DDDatabaseManager)
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+static DDDatabaseManager *_instance;
+
++ (instancetype)allocWithZone:(struct _NSZone *)zone{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [super allocWithZone:zone];
+    });
+    return _instance;
+}
++ (instancetype)shared{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[DDDatabaseManager alloc]init];
+    });
+    return _instance
+}
 - (NSURL *)applicationDocumentsDirectory {
     // The directory the application uses to store the Core Data store file. This code uses a directory named "BG.ComicReader" in the application's documents directory.
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
